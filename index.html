@@ -452,13 +452,14 @@ for (let i = 0; i < 30; i++) {
     const duration = 45 + Math.random() * 20;
 
     // Random start delay
-    const delay = Math.random() * 3;
+    const delay = 3 + Math.random() * 2;
 
     // Animation durations
     petal.style.animationDuration = `
         ${duration}s,
-        ${15 + Math.random() * 8}s,
-        ${18 + Math.random() * 10}s
+        ${duration}s,
+        ${duration}s,
+        
     `;
 
     // Animation delays
