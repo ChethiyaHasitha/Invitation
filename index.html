@@ -125,9 +125,81 @@
             margin: 1.5rem auto;
             opacity: 0.6;
         }
+
+        /* Falling Rose Petals */
+.petals {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.petal {
+    position: absolute;
+    top: -60px;
+    width: 18px;
+    height: 22px;
+    opacity: 0.9;
+    animation-name: fall, sway, rotatePetal;
+    animation-timing-function: linear, ease-in-out, linear;
+    animation-iteration-count: infinite;
+}
+
+/* Petal Shape */
+.petal::before,
+.petal::after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 18px;
+    background: radial-gradient(circle at 30% 30%, #ff8fa3, #d90429 70%);
+    border-radius: 12px 12px 0 12px;
+}
+
+.petal::before {
+    transform: rotate(-25deg);
+    left: 2px;
+}
+
+.petal::after {
+    transform: rotate(25deg);
+    right: 2px;
+}
+
+@keyframes fall {
+    from {
+        transform: translateY(-80px);
+    }
+    to {
+        transform: translateY(110vh);
+    }
+}
+
+@keyframes sway {
+    0% {
+        margin-left: -15px;
+    }
+    50% {
+        margin-left: 15px;
+    }
+    100% {
+        margin-left: -15px;
+    }
+}
+
+@keyframes rotatePetal {
+    from {
+        rotate: 0deg;
+    }
+    to {
+        rotate: 360deg;
+    }
+}
     </style>
 </head>
 <body class="bg-background text-on-background font-body-md overflow-x-hidden">
+    <div class="petals" id="petals"></div>
 <!-- Top Navigation Shell -->
 <header class="fixed top-0 w-full z-50 bg-background/90 backdrop-blur-md border-b border-outline-variant/40">
 <nav class="flex items-center px-gutter py-4 w-full max-w-screen-xl mx-auto justify-center">
@@ -293,6 +365,34 @@
                 if (countdownEl) countdownEl.innerHTML = "<p class='font-headline-md text-primary w-full text-center'>Today is the Day!</p>";
             }
         }, 1000);
+
+        /* Falling Rose Petals */
+
+const petalsContainer = document.getElementById("petals");
+
+for (let i = 0; i < 35; i++) {
+    const petal = document.createElement("div");
+    petal.classList.add("petal");
+
+    petal.style.left = Math.random() * 100 + "vw";
+
+    const duration = 25 + Math.random() * 15;
+    const delay = Math.random() * 8;
+    const size = 12 + Math.random() * 14;
+
+    petal.style.width = size + "px";
+    petal.style.height = size * 1.3 + "px";
+
+    petal.style.animationDuration =
+        `${duration}s, ${3 + Math.random() * 3}s, ${4 + Math.random() * 4}s`;
+
+    petal.style.animationDelay =
+        `${delay}s, ${delay}s, ${delay}s`;
+
+    petal.style.opacity = 0.5 + Math.random() * 0.5;
+
+    petalsContainer.appendChild(petal);
+}
     </script>
 
 
